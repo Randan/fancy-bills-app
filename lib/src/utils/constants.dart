@@ -16,6 +16,7 @@ final String kLinkLogin = '/login';
 final String kLinkSignup = '/signup';
 final String kLinkSettings = '/settings';
 final String kLinkHistory = '/history';
+final String kLinkRates = '/rates';
 
 // Sizes
 final double kGap = 8.0;

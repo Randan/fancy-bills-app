@@ -68,6 +68,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Widget emailField() {
     return TextFormField(
       autovalidateMode: AutovalidateMode.onUserInteraction,
+      keyboardType: TextInputType.emailAddress,
       decoration: InputDecoration(
         hintText: 'E-mail',
       ),
@@ -85,6 +86,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         Expanded(
           child: TextFormField(
             autovalidateMode: AutovalidateMode.onUserInteraction,
+            keyboardType: TextInputType.visiblePassword,
             decoration: InputDecoration(
               hintText: 'Password',
               contentPadding: EdgeInsets.only(
@@ -120,6 +122,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         Expanded(
           child: TextFormField(
             autovalidateMode: AutovalidateMode.onUserInteraction,
+            keyboardType: TextInputType.visiblePassword,
             decoration: InputDecoration(
               hintText: 'Password Confirmation',
               contentPadding: EdgeInsets.only(

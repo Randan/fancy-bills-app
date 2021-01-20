@@ -62,6 +62,14 @@ class AppDrawer extends StatelessWidget {
                 Navigator.pushNamed(context, kLinkHistory);
               },
             ),
+            ListTile(
+              leading: Icon(Icons.rate_review),
+              title: Text('Rates'),
+              onTap: () {
+                Navigator.of(context).pop();
+                Navigator.pushNamed(context, kLinkRates);
+              },
+            ),
           ],
         ),
       ),

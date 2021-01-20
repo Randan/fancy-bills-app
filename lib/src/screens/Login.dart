@@ -65,6 +65,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget emailField() {
     return TextFormField(
       autovalidateMode: AutovalidateMode.onUserInteraction,
+      keyboardType: TextInputType.emailAddress,
       decoration: InputDecoration(
         hintText: 'E-mail',
       ),
@@ -82,6 +83,7 @@ class _LoginScreenState extends State<LoginScreen> {
         Expanded(
           child: TextFormField(
             autovalidateMode: AutovalidateMode.onUserInteraction,
+            keyboardType: TextInputType.visiblePassword,
             decoration: InputDecoration(
               hintText: 'Password',
               contentPadding: EdgeInsets.only(

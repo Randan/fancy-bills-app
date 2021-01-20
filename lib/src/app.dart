@@ -5,6 +5,7 @@ import './screens/Login.dart';
 import './screens/Signup.dart';
 import './screens/Settings.dart';
 import './screens/History.dart';
+import './screens/Rates.dart';
 
 class App extends StatelessWidget {
   @override
@@ -24,6 +25,7 @@ class App extends StatelessWidget {
         kLinkSettings: (BuildContext context) =>
             SettingsScreen(title: 'Settings'),
         kLinkHistory: (BuildContext context) => HistoryScreen(title: 'History'),
+        kLinkRates: (BuildContext context) => RatesScreen(title: 'Rates'),
       },
     );
   }
