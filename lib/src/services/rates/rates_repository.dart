@@ -5,4 +5,5 @@ class RatesRepository {
   RatesProvider _ratesProvider = RatesProvider();
 
   Future<Rates> getRates() => _ratesProvider.getRates();
+  Future<Rates> editRates(newRates) => _ratesProvider.editRates(newRates);
 }

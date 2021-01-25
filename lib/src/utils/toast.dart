@@ -3,7 +3,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 import './constants.dart';
 
-void showToast(String message, type) {
+void showToast(String message, ToastType type) {
   Color typeColor;
 
   switch (type) {

@@ -4,8 +4,13 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import '../../models/rates.dart';
 
 class RatesProvider {
+  final Map<String, String> headers = {'Content-Type': 'application/json'};
+
   Future<Rates> getRates() async {
-    final response = await http.get('${env['API_URL']}/rates');
+    final response = await http.get(
+      '${env['API_URL']}/rates',
+      headers: headers,
+    );
 
     if (response.statusCode == 200) {
       final dynamic ratesJson = json.decode(response.body);
@@ -19,7 +24,8 @@ class RatesProvider {
   Future<Rates> editRates(newRates) async {
     final response = await http.patch(
       '${env['API_URL']}/rates',
-      body: newRates,
+      headers: headers,
+      body: json.encode(newRates),
     );
 
     if (response.statusCode == 200) {
@@ -27,7 +33,7 @@ class RatesProvider {
 
       return Rates.fromJson(ratesJson);
     } else {
-      throw Exception('Error editing rates');
+      throw Exception('Error updating rates');
     }
   }
 }

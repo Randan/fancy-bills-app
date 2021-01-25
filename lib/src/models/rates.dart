@@ -1,7 +1,4 @@
 class Rates {
-  String title;
-  num value;
-
   num rent;
   num coldWater;
   num hotWater;

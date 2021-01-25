@@ -23,3 +23,11 @@ final double kGap = 8.0;
 
 // Enums
 enum ToastType { INFO, SUCCESS, WARNING, ERROR }
+enum RateType {
+  ElecAbove100,
+  ElecBelow100,
+  ColdWater,
+  HotWater,
+  Sewerage,
+  Rent
+}

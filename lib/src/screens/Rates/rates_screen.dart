@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../cubit/rates/rates_cubit.dart';
+import '../../cubit/rates/rates_state.dart';
 import '../../services/rates/rates_repository.dart';
 import '../../widgets/header.dart';
 import '../../widgets/drawer.dart';
@@ -21,19 +22,62 @@ class RatesScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppHeader(title: title),
         drawer: AppDrawer(),
-        body: RatesCards(),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            print('button Rates pressed');
-            showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return RatesEditForm();
-              },
-            );
+        body: BlocBuilder<RatesCubit, RatesState>(
+          builder: (context, state) {
+            if (state is RatesEmptyState) {
+              return Center(
+                child: Text('There is no rates'),
+              );
+            }
+
+            if (state is RatesErrorState) {
+              return Center(
+                child: Text('Rates fetching error'),
+              );
+            }
+
+            if (state is RatesLoadingState) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+
+            if (state is RatesLoadedState) {
+              return RatesCards(mainContext: context, mainState: state);
+            }
+
+            return Container();
           },
-          tooltip: 'Edit Rates',
-          child: Icon(Icons.edit),
+        ),
+        floatingActionButton: BlocBuilder<RatesCubit, RatesState>(
+          builder: (context, state) {
+            if (state is RatesEmptyState) return Container();
+
+            if (state is RatesErrorState) return Container();
+
+            if (state is RatesLoadingState) return Container();
+
+            if (state is RatesLoadedState) {
+              return FloatingActionButton(
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return RatesEditForm(
+                        mainContext: context,
+                        mainState: state,
+                        mainRepository: ratesRepository,
+                      );
+                    },
+                  );
+                },
+                tooltip: 'Edit Rates',
+                child: Icon(Icons.edit),
+              );
+            }
+
+            return Container();
+          },
         ),
       ),
     );
