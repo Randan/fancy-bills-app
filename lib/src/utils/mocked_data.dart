@@ -158,11 +158,3 @@ final List<Map<String, dynamic>> electricity = [
     'value': 1300,
   },
 ];
-
-final int rent = 8000;
-
-final double coldWaterTariff = 15.228;
-final double hotWaterTariff = 81.0;
-final double canalizationTariff = 9.216;
-final double elecBelow100Tariff = 0.9;
-final double elecAbove100Tariff = 1.68;

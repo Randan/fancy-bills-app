@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../cubit/rates/rates_cubit.dart';
-import '../cubit/rates/rates_state.dart';
-import '../services/rates/rates_repository.dart';
-import '../utils/constants.dart';
-import '../widgets/header.dart';
-import '../widgets/drawer.dart';
-import '../widgets/card.dart';
+import '../../cubit/rates/rates_cubit.dart';
+import '../../cubit/rates/rates_state.dart';
+import '../../services/rates/rates_repository.dart';
+import '../../utils/constants.dart';
+import '../../widgets/header.dart';
+import '../../widgets/drawer.dart';
+import '../../widgets/card.dart';
 
 class RatesScreen extends StatelessWidget {
   final String title;
@@ -30,7 +30,43 @@ class RatesScreen extends StatelessWidget {
               context: context,
               builder: (BuildContext context) {
                 return Center(
-                  child: Text("Hello Rates Edit Form"),
+                  child: AlertDialog(
+                    title: const Text('Edit Rates'),
+                    content: new Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        TextFormField(
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          keyboardType: TextInputType.number,
+                          decoration: InputDecoration(
+                            hintText: 'Electricity Above 100',
+                          ),
+                          validator: (value) {
+                            if (value.length > 0) return null;
+                            return 'Enter rate';
+                          },
+                          onChanged: (value) => print(value),
+                        ),
+                      ],
+                    ),
+                    actions: <Widget>[
+                      FlatButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        textColor: Theme.of(context).primaryColor,
+                        child: const Text('Close'),
+                      ),
+                      FlatButton(
+                        onPressed: () {
+                          print('Edit Button Pressed');
+                        },
+                        textColor: Theme.of(context).primaryColor,
+                        child: const Text('Save'),
+                      ),
+                    ],
+                  ),
                 );
               },
             );

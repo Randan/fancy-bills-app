@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
-import '../utils/constants.dart';
-import '../utils/toast.dart';
-import '../widgets/header.dart';
-import '../widgets/drawer.dart';
-import '../widgets/button_link.dart';
+import '../../utils/constants.dart';
+import '../../utils/toast.dart';
+import '../../widgets/header.dart';
+import '../../widgets/drawer.dart';
+import '../../widgets/button_link.dart';
 
 class LoginScreen extends StatefulWidget {
   final String title;

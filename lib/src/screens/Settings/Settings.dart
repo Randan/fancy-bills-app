@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../widgets/header.dart';
-import '../widgets/drawer.dart';
+import '../../widgets/header.dart';
+import '../../widgets/drawer.dart';
 
 class SettingsScreen extends StatelessWidget {
   final String title;

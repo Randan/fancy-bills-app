@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../utils/constants.dart';
-import '../utils/mocked_data.dart';
-import '../widgets/table.dart';
+import '../../utils/constants.dart';
+import '../../utils/mocked_data.dart';
+import '../../widgets/table.dart';
 
 class HistoryScreen extends StatelessWidget {
   final String title;
