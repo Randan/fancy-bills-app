@@ -12,7 +12,7 @@ class RatesCubit extends Cubit<RatesState> {
     try {
       emit(RatesLoadingState());
 
-      final List<Rates> _loadedRatesList = await ratesRepository.getRates();
+      final Rates _loadedRatesList = await ratesRepository.getRates();
       emit(RatesLoadedState(loadedRates: _loadedRatesList));
     } catch (_) {
       emit(RatesErrorState());

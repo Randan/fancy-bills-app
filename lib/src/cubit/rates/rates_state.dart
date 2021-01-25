@@ -8,7 +8,7 @@ class RatesEmptyState extends RatesState {}
 class RatesLoadingState extends RatesState {}
 
 class RatesLoadedState extends RatesState {
-  List<Rates> loadedRates;
+  Rates loadedRates;
 
   RatesLoadedState({@required this.loadedRates})
       : assert(loadedRates != null),

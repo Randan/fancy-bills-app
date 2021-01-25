@@ -2,15 +2,30 @@ class Rates {
   String title;
   num value;
 
+  num rent;
+  num coldWater;
+  num hotWater;
+  num sewerage;
+  num electricityBelow;
+  num electricityAbove;
+
   Rates({
-    this.title,
-    this.value,
+    this.rent,
+    this.coldWater,
+    this.hotWater,
+    this.sewerage,
+    this.electricityBelow,
+    this.electricityAbove,
   });
 
   factory Rates.fromJson(Map<String, dynamic> json) {
     return Rates(
-      title: json['title'],
-      value: json['value'],
+      rent: json['rent'],
+      coldWater: json['coldWater'],
+      hotWater: json['hotWater'],
+      sewerage: json['sewerage'],
+      electricityBelow: json['electricityBelow'],
+      electricityAbove: json['electricityAbove'],
     );
   }
 }

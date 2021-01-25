@@ -8,25 +8,36 @@ import '../widgets/header.dart';
 import '../widgets/drawer.dart';
 import '../widgets/card.dart';
 
-class RatesScreen extends StatefulWidget {
+class RatesScreen extends StatelessWidget {
   final String title;
   RatesScreen({Key key, this.title}) : super(key: key);
 
   final ratesRepository = RatesRepository();
 
   @override
-  _RatesScreenState createState() => _RatesScreenState();
-}
-
-class _RatesScreenState extends State<RatesScreen> {
-  @override
   Widget build(BuildContext context) {
     return BlocProvider<RatesCubit>(
-      create: (BuildContext context) => RatesCubit(widget.ratesRepository),
+      create: (BuildContext context) =>
+          RatesCubit(ratesRepository)..fetchRates(),
       child: Scaffold(
-        appBar: AppHeader(title: widget.title),
+        appBar: AppHeader(title: title),
         drawer: AppDrawer(),
         body: RatesCards(),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            print('button Rates pressed');
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return Center(
+                  child: Text("Hello Rates Edit Form"),
+                );
+              },
+            );
+          },
+          tooltip: 'Edit Rates',
+          child: Icon(Icons.edit),
+        ),
       ),
     );
   }
@@ -37,82 +48,57 @@ class RatesCards extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final RatesCubit ratesCubit = context.watch<RatesCubit>();
-
     return BlocBuilder<RatesCubit, RatesState>(
       builder: (context, state) {
         if (state is RatesEmptyState) {
           return Center(
-            // child: Text('There is no rates'),
-            child: RaisedButton(
-              child: Text('press'),
-              onPressed: () {
-                ratesCubit.fetchRates();
-              },
-            ),
+            child: Text('There is no rates'),
           );
         }
+
         if (state is RatesErrorState) {
           return Center(
             child: Text('Rates fetching error'),
           );
         }
+
         if (state is RatesLoadingState) {
           return Center(
             child: CircularProgressIndicator(),
           );
         }
+
         if (state is RatesLoadedState) {
           return Container(
             padding: EdgeInsets.all(kGap),
             child: Wrap(
-              alignment: WrapAlignment.start,
+              alignment: WrapAlignment.spaceAround,
               spacing: kGap,
               children: [
-                ...state.loadedRates
-                    .map(
-                      (rate) => AppCard(
-                        title: rate.title,
-                        value: rate.value,
-                      ),
-                    )
-                    .toList(),
-                // Container(
-                //   child: AppCard(
-                //     title: 'Rent',
-                //     value: state.loadedRates.rent,
-                //   ),
-                // ),
-                // Container(
-                //   child: AppCard(
-                //     title: 'Cold Water',
-                //     value: state.loadedRates.coldWater,
-                //   ),
-                // ),
-                // Container(
-                //   child: AppCard(
-                //     title: 'Hot Water',
-                //     value: state.loadedRates.hotWater,
-                //   ),
-                // ),
-                // Container(
-                //   child: AppCard(
-                //     title: 'Sewerage',
-                //     value: state.loadedRates.sewerage,
-                //   ),
-                // ),
-                // Container(
-                //   child: AppCard(
-                //     title: 'Electricity below 100',
-                //     value: state.loadedRates.electricityBelow,
-                //   ),
-                // ),
-                // Container(
-                //   child: AppCard(
-                //     title: 'Electricity above 100',
-                //     value: state.loadedRates.electricityAbove,
-                //   ),
-                // ),
+                AppCard(
+                  title: 'Electricity Above 100',
+                  value: state.loadedRates.electricityAbove,
+                ),
+                AppCard(
+                  title: 'Electricity Below 100',
+                  value: state.loadedRates.electricityBelow,
+                ),
+                AppCard(
+                  title: 'Cold Water',
+                  value: state.loadedRates.coldWater,
+                ),
+                AppCard(
+                  title: 'Hot Water',
+                  value: state.loadedRates.hotWater,
+                ),
+                AppCard(
+                  title: 'Sewerage',
+                  value: state.loadedRates.sewerage,
+                ),
+                AppCard(
+                  title: 'Rent',
+                  value: state.loadedRates.rent,
+                ),
               ],
             ),
           );

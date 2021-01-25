@@ -20,7 +20,6 @@ dependencies:
   http: ^0.12.2
   fluttertoast: ^7.0.4
   flutter_dotenv: ^3.1.0
-  after_layout: ^1.0.7+2
 
   cupertino_icons: ^1.0.0
 

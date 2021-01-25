@@ -10,11 +10,23 @@ class AppCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: Container(
+        width: MediaQuery.of(context).size.width / 2 - kGap * 3,
         padding: EdgeInsets.all(kGap),
         child: Column(
           children: [
-            Text(title),
-            Text(value.toString()),
+            Text(
+              title,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 15,
+              ),
+            ),
+            SizedBox(height: kGap),
+            Text(
+              '${value.toString()}₴',
+              textAlign: TextAlign.center,
+            ),
           ],
         ),
       ),
