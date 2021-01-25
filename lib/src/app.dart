@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import './utils/constants.dart';
-import './screens/Home/HomeScreen.dart';
-import './screens/Login/LoginScreen.dart';
-import './screens/Signup/SignupScreen.dart';
-import './screens/Settings/SettingsScreen.dart';
-import './screens/History/HistoryScreen.dart';
-import './screens/Rates/RatesScreen.dart';
+import './screens/home/home_screen.dart';
+import './screens/login/login_screen.dart';
+import './screens/signup/signup_screen.dart';
+import './screens/settings/settings_screen.dart';
+import './screens/history/history_screen.dart';
+import './screens/rates/rates_screen.dart';
 
 class App extends StatelessWidget {
   @override

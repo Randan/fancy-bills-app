@@ -11,9 +11,23 @@ class RatesProvider {
       final dynamic ratesJson = json.decode(response.body);
 
       return Rates.fromJson(ratesJson);
-      // return ratesJson.map((json) => Rates.fromJson(json)).toList();
     } else {
       throw Exception('Error fetching rates');
+    }
+  }
+
+  Future<Rates> editRates(newRates) async {
+    final response = await http.patch(
+      '${env['API_URL']}/rates',
+      body: newRates,
+    );
+
+    if (response.statusCode == 200) {
+      final dynamic ratesJson = json.decode(response.body);
+
+      return Rates.fromJson(ratesJson);
+    } else {
+      throw Exception('Error editing rates');
     }
   }
 }
