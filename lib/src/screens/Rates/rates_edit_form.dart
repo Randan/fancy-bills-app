@@ -1,17 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../utils/constants.dart';
+import '../../cubit/rates/rates_cubit.dart';
 import '../../cubit/rates/rates_state.dart';
+import '../../services/rates/rates_repository.dart';
 
 class RatesEditForm extends StatefulWidget {
-  final mainContext;
-  final mainState;
-  final mainRepository;
-  const RatesEditForm({
-    Key key,
-    this.mainContext,
-    this.mainState,
-    this.mainRepository,
-  }) : super(key: key);
+  const RatesEditForm({Key key}) : super(key: key);
 
   @override
   _RatesEditFormState createState() => _RatesEditFormState();
@@ -19,6 +14,7 @@ class RatesEditForm extends StatefulWidget {
 
 class _RatesEditFormState extends State<RatesEditForm> {
   final _formKey = GlobalKey<FormState>();
+  RatesCubit ratesCubit;
 
   String electricityAboveState;
   String electricityBelowState;
@@ -27,65 +23,68 @@ class _RatesEditFormState extends State<RatesEditForm> {
   String sewerageState;
   String rentState;
 
+  final ratesRepository = RatesRepository();
+
   @override
   Widget build(BuildContext context) {
     return Center(
       child: AlertDialog(
         title: const Text('Edit Rates'),
-        content: Builder(
-          builder: (context) {
-            if (widget.mainState is RatesEmptyState) {
+        content: BlocBuilder<RatesCubit, RatesState>(
+          builder: (context, state) {
+            ratesCubit = context.watch<RatesCubit>();
+            if (state is RatesEmptyState) {
               return Center(
                 child: Text('There is no Rates Fields'),
               );
             }
 
-            if (widget.mainState is RatesErrorState) {
+            if (state is RatesErrorState) {
               return Center(
                 child: Text('Fetching Rates Data error'),
               );
             }
 
-            if (widget.mainState is RatesLoadingState) {
+            if (state is RatesLoadingState) {
               return Center(
                 child: CircularProgressIndicator(),
               );
             }
 
-            if (widget.mainState is RatesLoadedState) {
+            if (state is RatesLoadedState) {
               return Form(
                 key: _formKey,
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
                       _formField(
-                        'Electricity Above 100',
-                        widget.mainState.loadedRates.electricityAbove,
+                        'Electricity > 100kW (kW/hour)',
+                        state.loadedRates.electricityAbove,
                         RateType.ElecAbove100,
                       ),
                       _formField(
-                        'Electricity Below 100',
-                        widget.mainState.loadedRates.electricityBelow,
+                        'Electricity < 100kW (kW/hour)',
+                        state.loadedRates.electricityBelow,
                         RateType.ElecBelow100,
                       ),
                       _formField(
-                        'Cold Water',
-                        widget.mainState.loadedRates.coldWater,
+                        'Cold Water (m3)',
+                        state.loadedRates.coldWater,
                         RateType.ColdWater,
                       ),
                       _formField(
-                        'Hot Water',
-                        widget.mainState.loadedRates.hotWater,
+                        'Hot Water (m3)',
+                        state.loadedRates.hotWater,
                         RateType.HotWater,
                       ),
                       _formField(
-                        'Sewerage',
-                        widget.mainState.loadedRates.sewerage,
+                        'Sewerage (m3)',
+                        state.loadedRates.sewerage,
                         RateType.Sewerage,
                       ),
                       _formField(
-                        'Rent',
-                        widget.mainState.loadedRates.rent,
+                        'Rent (month)',
+                        state.loadedRates.rent,
                         RateType.Rent,
                       ),
                     ],
@@ -163,6 +162,7 @@ class _RatesEditFormState extends State<RatesEditForm> {
       FlatButton(
         onPressed: () {
           _handlePressSave();
+          Navigator.of(context).pop();
         },
         textColor: Theme.of(context).primaryColor,
         child: Text('Save'),
@@ -209,6 +209,6 @@ class _RatesEditFormState extends State<RatesEditForm> {
         'rent': double.parse(this.rentState),
       };
 
-    if (newRates.length > 0) widget.mainRepository.editRates(newRates);
+    if (newRates.length > 0) ratesCubit.editRates(newRates);
   }
 }
